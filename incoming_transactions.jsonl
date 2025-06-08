@@ -1,0 +1,5 @@
+{"id":"TXN001","date":"2025-06-08T13:21:40Z","card_id":"4111222233330001","merchant":"Acme Grocers","amount":35.17,"currency":"CAD","location":"Toronto"}
+{"id":"TXN002","date":"2025-06-08T13:23:03Z","card_id":"5555666677778888","merchant":"LuxWatch Outlet","amount":3949.00,"currency":"CAD","location":"Vancouver"}
+{"id":"TXN003","date":"2025-06-08T13:24:55Z","card_id":"8888999900001111","merchant":"CoffeeCloud","amount":5.40,"currency":"CAD","location":"Ottawa"}
+{"id":"TXN004","date":"2025-06-08T13:25:42Z","card_id":"4111222233330001","merchant":"QuickFuel","amount":71.90,"currency":"CAD","location":"Mississauga"}
+{"id":"TXN005","date":"2025-06-08T13:27:16Z","card_id":"5555666677778888","merchant":"CryptoExchange","amount":2500.00,"currency":"USD","location":"New York"}
