@@ -1,6 +1,6 @@
 ````markdown
 # Fraud-Detection-Agentic-AI  
-End-to-end reference implementation of the **“Ground-Truth Framework for Unlocking Agentic AI Value”** (Anjali Sharma, 2025).  
+End-to-end reference implementation of the **“Ground-Truth Framework for Unlocking Agentic AI Value”** 
 It shows how to combine a **Triple-Extraction Knowledge Graph**, **LangGraph agentic orchestration**, and **tool/function calls** to detect high-risk card transactions and alert a human analyst in real time.
 
 ---
