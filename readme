@@ -1,0 +1,128 @@
+````markdown
+# Fraud-Detection-Agentic-AI  
+End-to-end reference implementation of the **“Ground-Truth Framework for Unlocking Agentic AI Value”** (Anjali Sharma, 2025).  
+It shows how to combine a **Triple-Extraction Knowledge Graph**, **LangGraph agentic orchestration**, and **tool/function calls** to detect high-risk card transactions and alert a human analyst in real time.
+
+---
+
+## ✨ What’s inside
+
+| File / folder | Purpose |
+|---------------|---------|
+| `fraud_detection_agentic_ai.py` | Single-file prototype – build KG, run LangGraph → score → decision, post Slack alert |
+| `historical_transactions.csv`  | Seed data ingested into the knowledge graph |
+| `incoming_transactions.jsonl`  | Stream of “live” transactions processed by the agent |
+| `requirements.txt`             | Python dependencies |
+| `.devcontainer/` (optional)    | Dev-container config for **GitHub Codespaces** |
+
+---
+
+## 1 - Quick start (GitHub Codespaces)
+
+1. Click **Code ▸ Codespaces ▸ “Create codespace on main”**.  
+   *A container boots with Python 3.12 and all libraries pre-installed (see `.devcontainer`).*  
+2. Go to the built-in terminal and run:
+
+   ```bash
+   cp .env.template .env        # fill in keys in the next step
+   python fraud_detection_agentic_ai.py
+````
+
+3. Watch the console for decisions and open Slack to see ⚠️ alerts.
+
+---
+
+## 2 - Quick start (local)
+
+```bash
+git clone https://github.com/<you>/fraud-detection-agentic-ai.git
+cd fraud-detection-agentic-ai
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.template .env           # edit with your keys
+python fraud_detection_agentic_ai.py
+```
+
+---
+
+## 3 - Environment variables (`.env`)
+
+| Name              | Example         | Description                                |
+| ----------------- | --------------- | ------------------------------------------ |
+| `OPENAI_API_KEY`  | `sk-…`          | GPT-4o-mini calls (extraction + reasoning) |
+| `SLACK_BOT_TOKEN` | `xoxb-…`        | Bot token with `chat:write` scope          |
+| `SLACK_CHANNEL`   | `#fraud-alerts` | Channel or channel-ID for alerts           |
+
+> **Tip:** in Codespaces add them under **Repo ▸ Settings ▸ Secrets ▸ Codespaces**
+> (they’ll be injected automatically).
+
+---
+
+## 4 - Data format
+
+### `historical_transactions.csv`
+
+```
+date,card_id,merchant,amount,currency,location
+2025-05-01,4111222233330001,Acme Grocers,54.26,CAD,Toronto
+…                                               
+```
+
+### `incoming_transactions.jsonl`
+
+```json
+{"id":"TXN002","date":"2025-06-08T13:23:03Z","card_id":"5555…","merchant":"LuxWatch Outlet",
+ "amount":3949.0,"currency":"CAD","location":"Vancouver"}
+```
+
+Feel free to extend the schemas—the agent passes the whole record to the LLM and risk-API.
+
+---
+
+## 5 - How it works
+
+```
+┌────────────┐     (build triples)     ┌──────────────────────────┐
+│ CSV/JSONL  │ ───────────────► │ Triple-Extraction KG (NetworkX) │
+└────────────┘                  └──────────────────────────┬──────┘
+                                            neighbours()   │
+                               ┌─────────────LangGraph─────▼────────────────┐
+                               │ analyse_node → score_node → decide_node    │
+                               │    (GPT-4o)       (risk API)   (GPT-4o)    │
+                               └───────────────────┬───────────┬────────────┘
+                                                   │           │
+                              Slack alert (block/escalate)     │
+                                                   │           │
+                                              ┌────▼────┐      │
+                                              │  END    │◄─────┘
+                                              └─────────┘
+```
+
+---
+
+## 6 - Next steps
+
+* **Persist the KG** in Neo4j/AstraDB and swap out `KnowledgeGraph`.
+* **Plug a real risk micro-service** into `call_risk_api()`.
+* Convert the script into a **Docker container** and deploy on AWS Fargate or Lambda.
+* Add **GitHub Actions** to run unit tests + Black lint on each PR.
+
+---
+
+## 7 - Contributing
+
+1. Fork → create feature branch (`feat/...`)
+2. Commit with conventional messages (`fix:`, `feat:`…)
+3. Open a Pull Request – GitHub Actions must pass green.
+
+---
+
+## 8 - Licence
+
+MIT – see `LICENCE` file.
+
+```
+
+Copy the block into `README.md` at your repo root, commit, and push.  
+Feel free to tweak tone, add architecture diagrams, or swap the licence notice to suit your org’s standards.
+```
