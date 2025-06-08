@@ -1,0 +1,7 @@
+date,card_id,merchant,amount,currency,location
+2025-05-01,4111222233330001,Acme Grocers,54.26,CAD,Toronto
+2025-05-03,4111222233330001,QuickFuel,73.10,CAD,Mississauga
+2025-05-04,5555666677778888,FlightHub,612.45,CAD,Toronto
+2025-05-06,4111222233330001,CoffeeCloud,4.75,CAD,Toronto
+2025-05-07,5555666677778888,Amazon.ca,129.99,CAD,Toronto
+2025-05-08,8888999900001111,BigBoxElectronics,1249.95,CAD,Ottawa
